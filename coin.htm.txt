@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<!--
+	Eventually by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>鮭魚代儲蛋商</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="icon" href="./favicon.ico">
+
+
+		<!-- Header -->
+			<header id="header">
+				<h1>歡迎光臨</h1>
+				<p>官方LINE<a href="https://lin.ee/Ax1fbjU">連結</a></p>
+				<iframe src="https://docs.google.com/spreadsheets/d/1KIpMb3zOMQLSO24d6MHIML1Ot49Lc1md--6T7qd92iM/edit" ></iframe>
+			</header>
+
+
+<form>
+    <div class="h-captcha" data-sitekey="d6ae0d37-804f-465a-bb3b-a66c5f901722"></div>
+</form>
+
+
+		<!-- Signup Form -->
+			<form id="signup-form" method="post" action="#">
+				<!---<input type="email" name="email" id="email" placeholder="Email Address" />--->
+				<!---<a href="https://lin.ee/Ax1fbjU"><input type="submit" value="我們開始吧" /></a>--->
+			
+				<h1><a class="w-2 btn btn-secondary m-2" type="submit" href="tk.html">我們開始吧</a></h1>
+			</form>
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="icons">
+					<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+					<li><a href="mailto:#" class="icon fa-envelope"></a><span class="label"></span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>&copy; salmon2025</li><li>關於: <a href="https://lin.ee/Ax1fbjU">官方LINE</a></li>
+				</ul>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+		<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "42a25f1aed9e468aa41f45ef8365916e"}'></script><!-- End Cloudflare Web Analytics -->
+</html>
