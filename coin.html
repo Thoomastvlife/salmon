@@ -1,53 +1,54 @@
-<!DOCTYPE HTML>
-<!--
-	Eventually by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>鮭魚代儲蛋商_價目表自助查詢</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="icon" href="./favicon.ico">
-		<a href="index.html" style="color: red;"><h3>回首頁</h3></a>
-		<h3>請注意費率請依照官方賴為主</h3>
-		<!-- Header -->
-		
-		<!---
-<iframe width="350" height="1000" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSpbLgNm-xdGX5A-bv-DKkvPEdyUXSTOKtX2FCpyduVRdR1PZLiCbExws2LBh2gl8iFlXW7jlzjvXKm/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
-			--->
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自助查價系統</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container" id="main-container">
+    
+    <!-- SVG 動態標題 -->
+    <div class="svg-title">
+      <svg viewBox="0 0 1320 300">
+        <symbol id="s-text">
+          <text text-anchor="middle" x="50%" y="50%" dy=".35em">
+           鮭魚差價系統
+          </text>
+        </symbol>  
 
+        <use xlink:href="#s-text" class="text"></use>
+        <use xlink:href="#s-text" class="text"></use>
+        <use xlink:href="#s-text" class="text"></use>
+        <use xlink:href="#s-text" class="text"></use>
+        <use xlink:href="#s-text" class="text"></use>
+      </svg>
+    </div>
 
-<form>
-    <div class="h-captcha" data-sitekey="d6ae0d37-804f-465a-bb3b-a66c5f901722"></div>
-</form>
+    <p class="lead">輸入金額計算可獲得抖幣（範圍 150~50000）</p>
 
+    <section class="search-area">
+      <div id="inputs-container" class="draggable-container">
+        <div class="draggable-item">
+          <input type="number" class="amount-input" placeholder="輸入金額 (150~50000)">
+        </div>
+      </div>
+      <button onclick="addInput()">➕ 新增金額</button>
+      <button onclick="calculate()">計算所有金額</button>
+    </section>
 
-		<!-- Signup Form -->
-			<form id="signup-form" method="post" action="#">
-				<!---<input type="email" name="email" id="email" placeholder="Email Address" />--->
-				<!---<a href="https://lin.ee/Ax1fbjU"><input type="submit" value="我們開始吧" /></a>--->
-			
-				
-			</form>
-		<!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-					<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-					<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-					<li><a href="mailto:#" class="icon fa-envelope"></a><span class="label"></span></a></li>
-				</ul>
-				<ul class="copyright">
-					<li>&copy; salmon2025</li><li>關於: <a href="https://lin.ee/Ax1fbjU">官方LINE</a></li>
-				</ul>
-			</footer>
+    <section id="results"></section>
+  </main>
 
-		<!-- Scripts -->
-			<script src="assets/js/main.js"></script>
+  <!-- 中間 modal 彈窗 -->
+  <div id="modal-backdrop" class="modal-backdrop">
+    <div id="popup" class="popup">
+      <span id="popup-message">其他金額請私信</span>
+      <button id="popup-close">✖</button>
+    </div>
+  </div>
 
-	</body>
-		<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "42a25f1aed9e468aa41f45ef8365916e"}'></script><!-- End Cloudflare Web Analytics -->
+  <script src="script.js"></script>
+</body>
 </html>
