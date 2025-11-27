@@ -11,21 +11,12 @@ const rateRules = [
   { min: 1500, rate: 2.845 },
   { min: 1400, rate: 2.844 },
   { min: 1000, rate: 2.840 },
-  //{ min: 850,  rate: 2.940 },
-  //{ min: 700,  rate: 2.939 },
   { min: 500,  rate: 2.830 },
   //{ min: 400,  rate: 2.937 },
   //{ min: 350,  rate: 2.936 },
   //{ min: 200,  rate: 2.935 },
   //{ min: 150,  rate: 2.930 }
 ];
-  //{ min: 30000, rate: 3.071 },
-  //{ min: 25000, rate: 3.067 },
-  //{ min: 20000, rate: 3.061 },
-  //{ min: 15000, rate: 3.056 },
-  //{ min: 10000, rate: 3.05 },
-  //{ min: 8000, rate: 3.04 },
-  //{ min: 5000, rate: 3.035 },
 
 
 
