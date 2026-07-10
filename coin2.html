@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鮭魚差價系統 - 直接金幣版</title>
+    <title>鮭魚差價系統 - 金幣查台幣版</title>
     <style>
         body { font-family: 'Microsoft JhengHei', sans-serif; text-align: center; padding: 20px; background: #f0f8ff; }
         h1 { color: #ff6b6b; }
@@ -15,88 +15,94 @@
     </style>
 </head>
 <body>
-    <h1>🐟 鮭魚差價系統 - 直接金幣版</h1>
-    <p>輸入台幣 → 直接對應表格金幣（整數）</p>
+    <h1>🐟 鮭魚差價系統 - 金幣查台幣版</h1>
+    <p>輸入金幣數量 → 反推所需台幣金額</p>
 
-    <input type="number" id="amount" placeholder="輸入台幣金額" min="351">
-    <button onclick="calculate()">🔍 查詢金幣</button>
+    <input type="number" id="coins" placeholder="輸入金幣數量" min="1000">
+    <button onclick="calculate()">🔍 查詢台幣</button>
     <button onclick="addAmount()">➕ 新增累計</button>
 
     <div class="result" id="result"></div>
     <div class="history" id="history"></div>
 
     <script>
-        // 表格數據：台幣下限 → 金幣數
-        const coinTable = [
-            {min: 351,   coins: 1000},
-            {min: 526,   coins: 1500},
-            {min: 702,   coins: 2000},
-            {min: 1034,  coins: 3000},
-            {min: 1379,  coins: 4000},
-            {min: 1724,  coins: 5000},
-            {min: 2068,  coins: 6000},
-            {min: 2413,  coins: 7000},
-            {min: 2758,  coins: 8000},
-            {min: 3101,  coins: 9000},
-            {min: 3446,  coins: 10000},
-            {min: 5165,  coins: 15000},
-            {min: 6885,  coins: 20000},
-            {min: 8600,  coins: 25000},
-            {min: 10313, coins: 30000},
-            {min: 13750, coins: 40000},
-            {min: 15464, coins: 45000},
-            {min: 17182, coins: 50000},
-            {min: 20583, coins: 60000},
-            {min: 27425, coins: 80000},
-            {min: 34247, coins: 100000},
-            {min: 41026, coins: 120000},
-            {min: 51195, coins: 150000},
-            {min: 59727, coins: 175000},
-            {min: 68143, coins: 200000},
-            {min: 101798,coins: 300000}
+        // 表格數據：金幣 → 台幣 (反向查詢用)
+        const table = [
+            {coins: 1000,   twd: 351},
+            {coins: 1500,   twd: 526},
+            {coins: 2000,   twd: 702},
+            {coins: 3000,   twd: 1034},
+            {coins: 4000,   twd: 1379},
+            {coins: 5000,   twd: 1724},
+            {coins: 6000,   twd: 2068},
+            {coins: 7000,   twd: 2413},
+            {coins: 8000,   twd: 2758},
+            {coins: 9000,   twd: 3101},
+            {coins: 10000,  twd: 3446},
+            {coins: 15000,  twd: 5165},
+            {coins: 20000,  twd: 6885},
+            {coins: 25000,  twd: 8600},
+            {coins: 30000,  twd: 10313},
+            {coins: 40000,  twd: 13750},
+            {coins: 45000,  twd: 15464},
+            {coins: 50000,  twd: 17182},
+            {coins: 60000,  twd: 20583},
+            {coins: 80000,  twd: 27425},
+            {coins: 100000, twd: 34247},
+            {coins: 120000, twd: 41026},
+            {coins: 150000, twd: 51195},
+            {coins: 175000, twd: 59727},
+            {coins: 200000, twd: 68143},
+            {coins: 300000, twd: 101798}
         ];
 
-        let totalCoins = 0;
+        let totalTwd = 0;
 
-        function getCoins(amount) {
-            for (let i = coinTable.length - 1; i >= 0; i--) {
-                if (amount >= coinTable[i].min) {
-                    return coinTable[i].coins;
+        function getTwd(coinsInput) {
+            // 找最接近的金幣
+            let closest = table[0];
+            let minDiff = Math.abs(table[0].coins - coinsInput);
+
+            for (let item of table) {
+                const diff = Math.abs(item.coins - coinsInput);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    closest = item;
                 }
             }
-            return 1000; // 最低
+            return closest.twd;
         }
 
         function calculate() {
-            const input = parseFloat(document.getElementById('amount').value);
-            if (!input || input < 351) {
-                alert("請輸入至少 351 台幣！");
+            const coins = parseFloat(document.getElementById('coins').value);
+            if (!coins || coins < 1000) {
+                alert("請輸入至少 1000 金幣！");
                 return;
             }
 
-            const coins = getCoins(input);
+            const twd = getTwd(coins);
 
             document.getElementById('result').innerHTML = `
-                💰 台幣：${input.toLocaleString()} 元<br>
-                🎁 直接獲得 <span style="color:#ff6b6b;font-size:32px;">${coins.toLocaleString()}</span> 金幣
+                🎁 金幣：${coins.toLocaleString()} 枚<br>
+                💰 需要台幣： <span style="color:#ff6b6b;font-size:32px;">${twd.toLocaleString()}</span> 元
             `;
         }
 
         function addAmount() {
-            const input = parseFloat(document.getElementById('amount').value);
-            if (!input || input < 351) return;
+            const coins = parseFloat(document.getElementById('coins').value);
+            if (!coins || coins < 1000) return;
 
-            const coins = getCoins(input);
-            totalCoins += coins;
+            const twd = getTwd(coins);
+            totalTwd += twd;
 
             document.getElementById('history').innerHTML += 
-                `<p>✅ ${input.toLocaleString()} 台幣 → ${coins.toLocaleString()} 金幣</p>`;
+                `<p>✅ ${coins.toLocaleString()} 金幣 → ${twd.toLocaleString()} 台幣</p>`;
 
             document.getElementById('result').innerHTML = `
-                <strong>目前累計金幣：${totalCoins.toLocaleString()} 枚</strong>
+                <strong>目前累計台幣：${totalTwd.toLocaleString()} 元</strong>
             `;
 
-            document.getElementById('amount').value = '';
+            document.getElementById('coins').value = '';
         }
     </script>
 </body>
