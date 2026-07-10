@@ -59,7 +59,7 @@ function addInput(){
   const container = document.getElementById("inputs-container");
   const div = document.createElement("div");
   div.className = "draggable-item";
-  div.innerHTML = `<input type="number" class="amount-input" placeholder="輸入金額 (100~50000)">`;
+  div.innerHTML = `<input type="number" class="amount-input" placeholder="輸入金額 (500~100000)">`;
   container.appendChild(div);
   enableDragAndDrop();
 }
