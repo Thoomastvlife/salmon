@@ -35,7 +35,6 @@
 <body>
   <main class="container" id="main-container">
    
-    <!-- SVG 動態標題 -->
     <div class="svg-title">
       <svg viewBox="0 0 1320 300">
         <symbol id="s-text">
@@ -50,7 +49,7 @@
         <use xlink:href="#s-text" class="text"></use>
       </svg>
     </div>
-    <p class="lead">輸入金幣數量 → 反推所需台幣（整數版）</p>
+    <p class="lead">輸入金幣數量</p>
     
     <section class="search-area">
       <div id="inputs-container" class="draggable-container">
@@ -74,47 +73,35 @@
   </div>
 
   <script>
-    const table = [
-      {coins: 1000,   twd: 351},
-      {coins: 1500,   twd: 526},
-      {coins: 2000,   twd: 702},
-      {coins: 3000,   twd: 1034},
-      {coins: 4000,   twd: 1379},
-      {coins: 5000,   twd: 1724},
-      {coins: 6000,   twd: 2068},
-      {coins: 7000,   twd: 2413},
-      {coins: 8000,   twd: 2758},
-      {coins: 9000,   twd: 3101},
-      {coins: 10000,  twd: 3446},
-      {coins: 15000,  twd: 5165},
-      {coins: 20000,  twd: 6885},
-      {coins: 25000,  twd: 8600},
-      {coins: 30000,  twd: 10313},
-      {coins: 40000,  twd: 13750},
-      {coins: 45000,  twd: 15464},
-      {coins: 50000,  twd: 17182},
-      {coins: 60000,  twd: 20583},
-      {coins: 80000,  twd: 27425},
-      {coins: 100000, twd: 34247},
-      {coins: 120000, twd: 41026},
-      {coins: 150000, twd: 51195},
-      {coins: 175000, twd: 59727},
-      {coins: 200000, twd: 68143},
-      {coins: 300000, twd: 101798}
-    ];
-
-    function getTwd(coins) {
-      let closest = table[0];
-      let minDiff = Math.abs(table[0].coins - coins);
-      for (let item of table) {
-        const diff = Math.abs(item.coins - coins);
-        if (diff < minDiff) {
-          minDiff = diff;
-          closest = item;
-        }
-      }
-      return closest.twd;
-    }
+    // 只允許表格內的金幣數量
+    const validCoins = {
+      1000: 351,
+      1500: 526,
+      2000: 702,
+      3000: 1034,
+      4000: 1379,
+      5000: 1724,
+      6000: 2068,
+      7000: 2413,
+      8000: 2758,
+      9000: 3101,
+      10000: 3446,
+      15000: 5165,
+      20000: 6885,
+      25000: 8600,
+      30000: 10313,
+      40000: 13750,
+      45000: 15464,
+      50000: 17182,
+      60000: 20583,
+      80000: 27425,
+      100000: 34247,
+      120000: 41026,
+      150000: 51195,
+      175000: 59727,
+      200000: 68143,
+      300000: 101798
+    };
 
     function showModal() {
       document.getElementById('modal-backdrop').style.display = 'flex';
@@ -138,18 +125,17 @@
       resultsContainer.innerHTML = '<h2>計算結果</h2>';
 
       let totalTwd = 0;
-      let valid = true;
+      let allValid = true;
 
       inputs.forEach((input, index) => {
-        let coins = parseFloat(input.value);
-        
-        if (!coins || coins < 1000 || coins > 300000 || !Number.isInteger(coins)) {
-          valid = false;
+        const coins = parseInt(input.value);
+
+        if (!coins || !validCoins[coins]) {
+          allValid = false;
           return;
         }
 
-        const twd = getTwd(coins);
-        totalTwd += twd;
+        const twd = validCoins[coins];
 
         const div = document.createElement('div');
         div.className = 'result-item';
@@ -159,10 +145,13 @@
           💰 需要台幣 <span class="highlight">${twd.toLocaleString()}</span> 元
         `;
         resultsContainer.appendChild(div);
+
+        totalTwd += twd;
       });
 
-      if (!valid) {
+      if (!allValid) {
         showModal();
+        resultsContainer.innerHTML = '<h2>計算結果</h2><p style="color:#ff6b6b;">⚠️ 部分金幣數量不在支援範圍，請洽官方賴</p>';
         return;
       }
 
