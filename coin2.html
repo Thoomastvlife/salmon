@@ -13,6 +13,7 @@
       border-radius: 10px; 
       font-size: 18px; 
       color: #e0e0e0;
+      border: 1px solid #444;
     }
     .highlight { 
       color: #ff6b6b; 
@@ -24,11 +25,24 @@
       color: #a5f3c0;
       font-size: 20px;
       font-weight: bold;
+      border: 1px solid #4ade80;
     }
     input {
       background: #333;
       color: white;
       border: 1px solid #555;
+      padding: 12px;
+      width: 100%;
+      font-size: 18px;
+    }
+    button {
+      padding: 14px;
+      font-size: 18px;
+      margin: 8px 4px;
+    }
+    #results h2 {
+      color: #fff;
+      margin-top: 30px;
     }
   </style>
 </head>
@@ -73,34 +87,14 @@
   </div>
 
   <script>
-    // 只允許表格內的金幣數量
     const validCoins = {
-      1000: 351,
-      1500: 526,
-      2000: 702,
-      3000: 1034,
-      4000: 1379,
-      5000: 1724,
-      6000: 2068,
-      7000: 2413,
-      8000: 2758,
-      9000: 3101,
-      10000: 3446,
-      15000: 5165,
-      20000: 6885,
-      25000: 8600,
-      30000: 10313,
-      40000: 13750,
-      45000: 15464,
-      50000: 17182,
-      60000: 20583,
-      80000: 27425,
-      100000: 34247,
-      120000: 41026,
-      150000: 51195,
-      175000: 59727,
-      200000: 68143,
-      300000: 101798
+      1000: 351, 1500: 526, 2000: 702, 3000: 1034,
+      4000: 1379, 5000: 1724, 6000: 2068, 7000: 2413,
+      8000: 2758, 9000: 3101, 10000: 3446, 15000: 5165,
+      20000: 6885, 25000: 8600, 30000: 10313, 40000: 13750,
+      45000: 15464, 50000: 17182, 60000: 20583, 80000: 27425,
+      100000: 34247, 120000: 41026, 150000: 51195,
+      175000: 59727, 200000: 68143, 300000: 101798
     };
 
     function showModal() {
@@ -122,15 +116,18 @@
     function calculate() {
       const inputs = document.querySelectorAll('.amount-input');
       const resultsContainer = document.getElementById('results');
+      
+      // 清空並重置結果區
       resultsContainer.innerHTML = '<h2>計算結果</h2>';
 
       let totalTwd = 0;
       let allValid = true;
 
       inputs.forEach((input, index) => {
-        const coins = parseInt(input.value);
+        const coinsStr = input.value.trim();
+        const coins = parseInt(coinsStr);
 
-        if (!coins || !validCoins[coins]) {
+        if (!coinsStr || isNaN(coins) || !validCoins[coins]) {
           allValid = false;
           return;
         }
@@ -149,18 +146,16 @@
         totalTwd += twd;
       });
 
-      if (!allValid) {
+      if (!allValid || totalTwd === 0) {
         showModal();
-        resultsContainer.innerHTML = '<h2>計算結果</h2><p style="color:#ff6b6b;">⚠️ 部分金幣數量不在支援範圍，請洽官方賴</p>';
         return;
       }
 
-      if (totalTwd > 0) {
-        const totalDiv = document.createElement('div');
-        totalDiv.className = 'result-item total';
-        totalDiv.innerHTML = `總計所需台幣：${totalTwd.toLocaleString()} 元`;
-        resultsContainer.appendChild(totalDiv);
-      }
+      // 顯示總計
+      const totalDiv = document.createElement('div');
+      totalDiv.className = 'result-item total';
+      totalDiv.innerHTML = `總計所需台幣：${totalTwd.toLocaleString()} 元`;
+      resultsContainer.appendChild(totalDiv);
     }
   </script>
 </body>
