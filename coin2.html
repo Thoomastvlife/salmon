@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鮭魚差價系統 - 直接金幣版</title>
+    <style>
+        body { font-family: 'Microsoft JhengHei', sans-serif; text-align: center; padding: 20px; background: #f0f8ff; }
+        h1 { color: #ff6b6b; }
+        input, button { padding: 12px; margin: 10px; font-size: 18px; border-radius: 8px; }
+        button { background: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background: #45a049; }
+        .result { font-size: 28px; margin: 20px; color: #333; font-weight: bold; }
+        .history { margin: 20px auto; max-width: 700px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>🐟 鮭魚差價系統 - 直接金幣版</h1>
+    <p>輸入台幣 → 直接對應表格金幣（整數）</p>
+
+    <input type="number" id="amount" placeholder="輸入台幣金額" min="351">
+    <button onclick="calculate()">🔍 查詢金幣</button>
+    <button onclick="addAmount()">➕ 新增累計</button>
+
+    <div class="result" id="result"></div>
+    <div class="history" id="history"></div>
+
+    <script>
+        // 表格數據：台幣下限 → 金幣數
+        const coinTable = [
+            {min: 351,   coins: 1000},
+            {min: 526,   coins: 1500},
+            {min: 702,   coins: 2000},
+            {min: 1034,  coins: 3000},
+            {min: 1379,  coins: 4000},
+            {min: 1724,  coins: 5000},
+            {min: 2068,  coins: 6000},
+            {min: 2413,  coins: 7000},
+            {min: 2758,  coins: 8000},
+            {min: 3101,  coins: 9000},
+            {min: 3446,  coins: 10000},
+            {min: 5165,  coins: 15000},
+            {min: 6885,  coins: 20000},
+            {min: 8600,  coins: 25000},
+            {min: 10313, coins: 30000},
+            {min: 13750, coins: 40000},
+            {min: 15464, coins: 45000},
+            {min: 17182, coins: 50000},
+            {min: 20583, coins: 60000},
+            {min: 27425, coins: 80000},
+            {min: 34247, coins: 100000},
+            {min: 41026, coins: 120000},
+            {min: 51195, coins: 150000},
+            {min: 59727, coins: 175000},
+            {min: 68143, coins: 200000},
+            {min: 101798,coins: 300000}
+        ];
+
+        let totalCoins = 0;
+
+        function getCoins(amount) {
+            for (let i = coinTable.length - 1; i >= 0; i--) {
+                if (amount >= coinTable[i].min) {
+                    return coinTable[i].coins;
+                }
+            }
+            return 1000; // 最低
+        }
+
+        function calculate() {
+            const input = parseFloat(document.getElementById('amount').value);
+            if (!input || input < 351) {
+                alert("請輸入至少 351 台幣！");
+                return;
+            }
+
+            const coins = getCoins(input);
+
+            document.getElementById('result').innerHTML = `
+                💰 台幣：${input.toLocaleString()} 元<br>
+                🎁 直接獲得 <span style="color:#ff6b6b;font-size:32px;">${coins.toLocaleString()}</span> 金幣
+            `;
+        }
+
+        function addAmount() {
+            const input = parseFloat(document.getElementById('amount').value);
+            if (!input || input < 351) return;
+
+            const coins = getCoins(input);
+            totalCoins += coins;
+
+            document.getElementById('history').innerHTML += 
+                `<p>✅ ${input.toLocaleString()} 台幣 → ${coins.toLocaleString()} 金幣</p>`;
+
+            document.getElementById('result').innerHTML = `
+                <strong>目前累計金幣：${totalCoins.toLocaleString()} 枚</strong>
+            `;
+
+            document.getElementById('amount').value = '';
+        }
+    </script>
+</body>
+</html>
